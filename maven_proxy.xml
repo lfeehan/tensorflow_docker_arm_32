@@ -1,0 +1,18 @@
+<settings>
+  <proxies>
+   <proxy>
+      <id>p1</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host></host>
+      <port>8080</port>
+    </proxy>
+    <proxy>
+      <id>p2</id>
+      <active>true</active>
+      <protocol>https</protocol>
+      <host></host>
+      <port>8080</port>
+    </proxy>
+  </proxies>
+</settings>
