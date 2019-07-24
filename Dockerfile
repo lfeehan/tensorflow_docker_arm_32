@@ -4,6 +4,7 @@ FROM multiarch/debian-debootstrap:armhf-stretch
 ARG http_proxy $http_proxy
 ARG https_proxy $https_proxy
 
+
 RUN apt-get update
 RUN apt-get install -y gnupg2
 RUN echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
@@ -32,12 +33,14 @@ RUN cp /protobuf/java/core/target/protobuf-java-3.2.0.jar /bazel/third_party/pro
 RUN cd /bazel && ./compile.sh || true
 RUN cp /bazel/output/bazel /usr/local/bin
 
-RUN cd bazel && git checkout tags/0.1.0
-RUN cd /bazel && bazel build //src:bazel
+#RUN git clone --recurse-submodules https://github.com/tensorflow/tensorflow.git tensorflows
 
+RUN wget https://github.com/tensorflow/tensorflow/archive/v1.13.2.tar.gz && tar xvzf v1.13.2.tar.gz
+RUN apt-get install -y python-numpy swig python-dev
 
-#RUN rm -rf /bazel /protobuf
-#RUN git clone --recurse-submodules https://github.com/tensorflow/tensorflow
-#RUN apt-get install python-numpy swig python-dev
+####
+# This section is for cuda / GPU compilation & is incomplete
+#RUN cd tensorflow-1.13.2 && grep -Rl "lib64"| xargs sed -i 's/lib64/lib/g' && grep -Rl "so.9.0"| xargs sed -i 's/so\.9\.0/so\.6\.5/g'
+#####
 
 
